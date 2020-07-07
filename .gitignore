@@ -1,3 +1,5 @@
 instance/
 Pipfile
 Pipfile.lock
+test.html
+flask.sqlite
