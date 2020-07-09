@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}View Your Pictures {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <p>Upload new pictures here:
+    <span> <a class= "action" href="{{url_for('pic.upload')}}"">New photo</a></span>
+  </p>
+
+  {% if is_empty %}
+    <p>no pics available</p>
+
+  {% else %}
+    {% for pic in pics %}
+      <article class="post">
+        <header>
+          <div class="about">
+            File: {{ pic['name']}}
+          </div>
+        </header>
+        <a href="{{url_for('pic.upload') +'/'+ pic['string_path'] }}">
+          <img src= "{{ url_for('pic.download_file', filename= pic['string_path'] )}}" alt="the image cant be retrieved" width= "400px">
+        </a>
+
+
+      </article>
+      {% if not loop.last %}
+        <hr>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+
+
+
+{% endblock %}

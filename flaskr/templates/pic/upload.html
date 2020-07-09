@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Upload Pictures {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<p>View uploaded photos here:
+  <span> <a class= "action" href="{{url_for('pic.view')}}"">My photos</a></span>
+</p>
+
+<form method="post" enctype= "multipart/form-data">
+  <label for="img">Choose a pic</label>
+  <input type="file"  name="img" id="img" accept="img/*">
+  <input type="submit" name="submit" value="submit">
+
+</form>
+
+{% endblock %}

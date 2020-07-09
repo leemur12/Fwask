@@ -11,10 +11,12 @@
     <h2>Fwask</h2>
     <ul>
       {% if g.user %}
-        <li><span> {{g.user['username']}} </span></li>
+        <li><span>user: {{g.user['username']}} </span></li>
+        <li><a href="{{url_for('index')}}">Home</a></li>
         <li><a href="{{url_for('auth.logout')}}">Log Out</a></li>
 
       {% else %}
+        <li><a href="{{url_for('index')}}">Home</a></li>
         <li><a href="{{url_for('auth.register')}}">Register</a></li>
         <li><a href="{{url_for('auth.login')}}">Log In</a></li>
 
@@ -39,5 +41,5 @@
 </body>
 
 <footer>
-  <p class= "footer">Kevin's website</p>
+  <p class= "footer"> Kevin's picture website</p>
 </footer>

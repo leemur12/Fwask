@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}homepage{% endblock %}
+
+{% block header %}<h1>Upload Pictures to Kevin</h1>{% endblock %}
+
+{% block content %}
+<p>Log in and save photos</p>
+
+<nav>
+  <ul>
+    {% if g.user %}
+    <li><a class= "action" href="{{url_for('pic.upload')}}"">Upload</a></li>
+    <li><a class= "action" href="{{url_for('pic.view')}}">View Your Pics</a></li>
+
+    {% else %}
+    <li><a class= "action" href="{{url_for('auth.login')}}"">Upload</a></li>
+    <li><a class= "action" href="{{url_for('auth.login')}}">View Your Pics</a></li>
+    {% endif %}
+  </ul>
+</nav>
+
+
+{% endblock %}
