@@ -24,6 +24,10 @@
           <img src= "{{ url_for('pic.download_file', filename= pic['string_path'] )}}" alt="the image cant be retrieved" width= "400px">
         </a>
 
+        <form action="{{url_for('pic.delete', id=pic['id'])}}" method="post">
+          <input class ="danger" type="submit" value="Delete" onclick="return confirm('Delete?');">
+        </form>
+
 
       </article>
       {% if not loop.last %}

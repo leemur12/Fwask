@@ -11,8 +11,9 @@ CREATE TABLE user(
 CREATE TABLE pic(
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT,
+  ext TEXT,
   owner_id INTEGER NOT NULL,
-  string_path TEXT NOT NULL,
+  string_path TEXT,
   FOREIGN KEY (owner_id) REFERENCES user (id)
 
 );

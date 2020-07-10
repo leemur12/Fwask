@@ -35,29 +35,49 @@ def upload():
 
             db=get_db()
 
+
+            db.execute('INSERT INTO pic (name,ext, owner_id) VALUES (?,?,?)', (orig_name,ext, g.user['id']))
+            db.commit()
+
             last_id= db.execute('SELECT MAX(id) FROM pic').fetchone()[0]
             if not last_id:
                 last_id= 0
 
             filename= str(last_id)+"."+ ext
 
+            db.execute('UPDATE pic SET string_path= ?', (filename,))
+            db.commit()
             path= os.path.join(current_app.config['FILEBASE'], filename)
-
             file.save(path)
 
-            db.execute('INSERT INTO pic (name, owner_id, string_path) VALUES (?,?,?)', (orig_name, g.user['id'], filename))
-            db.commit()
+
+
 
             return redirect(url_for('index'))
 
     return render_template('pic/upload.html')
+
+@bp.route('/<int:id>/delete', methods=('POST',))
+@login_required
+def delete(id):
+
+    db=get_db()
+    ext= db.execute('SELECT ext FROM pic WHERE id=?',(id,)).fetchone()[0]
+    filename= str(id)+"."+ext
+
+    path= os.path.join(current_app.config['FILEBASE'], filename)
+    os.remove(path)
+
+    db.execute('DELETE FROM pic WHERE id =?', (id,))
+    db.commit()
+    return redirect(url_for('pic.view'))
 
 @bp.route('/view')
 @login_required
 def view():
     data = get_db()
 
-    pictures= data.execute('SELECT name, string_path FROM pic WHERE owner_id= ? ORDER BY id DESC', (g.user['id'],)).fetchall()
+    pictures= data.execute('SELECT id, name, string_path FROM pic WHERE owner_id= ? ORDER BY id DESC', (g.user['id'],)).fetchall()
     is_empty= not bool(pictures)
 
     return render_template('pic/view.html', pics=pictures, is_empty=is_empty)
