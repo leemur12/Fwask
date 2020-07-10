@@ -45,7 +45,7 @@ def upload():
 
             filename= str(last_id)+"."+ ext
 
-            db.execute('UPDATE pic SET string_path= ?', (filename,))
+            db.execute('UPDATE pic SET string_path= ? WHERE id=?', (filename,last_id))
             db.commit()
             path= os.path.join(current_app.config['FILEBASE'], filename)
             file.save(path)
@@ -53,7 +53,7 @@ def upload():
 
 
 
-            return redirect(url_for('index'))
+            return redirect(url_for('pic.upload'))
 
     return render_template('pic/upload.html')
 
